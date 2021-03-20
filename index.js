@@ -3,10 +3,20 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+
+const connect = require('./schemas');
+connect();
+
 // 라우트 기능 사용. require() 안에 파일 위치를 보내면 해당 폴더의 js 파일을 사용할 수 있다.
 // 라우트 기능을 사용하면 내가 index.js에 ./routes/goods 즉, ./routes라는 공통적인 경로를 갖는 애들을 다른 파일에 정리해서 사용할 수 있다.
-const goodsRouter = require('./routes/goods');
-const userRouter = require('./routes/user');
+// const goodsRouter = require('./routes/goods');
+// const userRouter = require('./routes/user');
+
+// 라우트 기능. routers 폴더 하위의 goods.js에 접근 
+// 
+const goodsRouter = require("./routers/goods");
+app.use("/api", [goodsRouter]);
+
 
 // 미들웨어란 route를 요청하기 전에 실행되는 기능을 의미한다. route에 오기 전 중간단계에서 처리해야할 작업을 설정한다.
 // express.json(), express.urlencoded({ extended: false }) 는 데이터 가공 용도로 사용한다.
@@ -17,8 +27,8 @@ app.use(express.static('public'));
 
 
 // use 함수를 사용하여 라우트 기능을 사용할 수 있다. 
-app.use('/goods', goodsRouter);
-app.use('/user', userRouter);
+// app.use('/goods', goodsRouter);
+// app.use('/user', userRouter);
 
 // set 함수를 사용해서 ejs 템플릿을 사용할 수 있다.
 app.set('views', __dirname + '/views');
@@ -41,6 +51,7 @@ app.get('/detail', (req, res) => {
     res.render('detail', { goodsId });
 })
 
+
 app.get('/', (req, res) => {
     res.send('<!DOCTYPE html>\
     <html lang="en">\
@@ -56,17 +67,6 @@ app.get('/', (req, res) => {
     </body>\
     </html>')
 })
-// app.get('/goods/detail', (req, res) => {
-//     res.send('상품 상세 페이지')
-// })
-
-// app.get('/user/login', (req, res) => {
-//     res.send('로그인 페이지')
-// })
-
-// app.get('/user/register', (req, res) => {
-//     res.send('회원가입 페이지')
-// })
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)
