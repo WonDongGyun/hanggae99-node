@@ -378,7 +378,7 @@ app.get('/mongodb', async (req, res) => {
 <br/>
 
 await mongoose.connect('mongodb://localhost/voyage') => mongoDB에 voyage라는 데이터베이스를 만듭니다.  
-const { Schema } = mongoose; => mongoDB에 Schema를 .
+const { Schema } = mongoose; => mongoDB에 Schema를 생성합니다.
 
 <br/>
 
