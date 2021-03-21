@@ -7,6 +7,16 @@ const port = 3000
 const connect = require('./schemas');
 connect();
 
+// 미들웨어란 route를 요청하기 전에 실행되는 기능을 의미한다. route에 오기 전 중간단계에서 처리해야할 작업을 설정한다.
+// express.json(), express.urlencoded({ extended: false }) 는 데이터 가공 용도로 사용한다.
+// express.static('public')을 작성하고 public directory 안에 cat.png를 넣었다. 이 경우, http://localhost:3000/cat.jpg 의 주소로 들어가면 이미지를 웹 브라우저에서 볼 수 있다.
+// 이거 use나 get, set 등의 밑에 존재하면 에러터짐!
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static('public'));
+
+
+
 // 라우트 기능 사용. require() 안에 파일 위치를 보내면 해당 폴더의 js 파일을 사용할 수 있다.
 // 라우트 기능을 사용하면 내가 index.js에 ./routes/goods 즉, ./routes라는 공통적인 경로를 갖는 애들을 다른 파일에 정리해서 사용할 수 있다.
 // const goodsRouter = require('./routes/goods');
@@ -16,15 +26,6 @@ connect();
 // 
 const goodsRouter = require("./routers/goods");
 app.use("/api", [goodsRouter]);
-
-
-// 미들웨어란 route를 요청하기 전에 실행되는 기능을 의미한다. route에 오기 전 중간단계에서 처리해야할 작업을 설정한다.
-// express.json(), express.urlencoded({ extended: false }) 는 데이터 가공 용도로 사용한다.
-// express.static('public')을 작성하고 public directory 안에 cat.png를 넣었다. 이 경우, http://localhost:3000/cat.jpg 의 주소로 들어가면 이미지를 웹 브라우저에서 볼 수 있다.
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static('public'));
-
 
 // use 함수를 사용하여 라우트 기능을 사용할 수 있다. 
 // app.use('/goods', goodsRouter);
@@ -51,6 +52,13 @@ app.get('/detail', (req, res) => {
     res.render('detail', { goodsId });
 })
 
+app.get('/cart', (req, res) => {
+    res.render('cart');
+})
+
+app.get('/order', (req, res) => {
+    res.render('order');
+})
 
 app.get('/', (req, res) => {
     res.send('<!DOCTYPE html>\
