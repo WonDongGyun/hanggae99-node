@@ -336,6 +336,24 @@ Node.js에서 몽고 DB를 사용하려면 우선 mongoose 라는 패키지를 �
 $ npm install mongoose
 ```   
 
+
+```javascript
+const mongoose = require('mongoose');
+
+app.get('/mongodb', async (req, res) => {
+    await mongoose.connect('mongodb://localhost/voyage', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: true,
+        useCreateIndex: true
+    });
+
+    res.send('ok');
+})
+
+```  
+
+<br/>
 <br/>
 
 위의 코드를 터미널에 입력해서 설치하고, 자신의 로컬 주소 뒤에 /mongodb를 입력해 화면에 ok라고 뜨면 정상적으로 설치가 된 것입니다.
