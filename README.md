@@ -82,10 +82,27 @@ package.json 파일에 express가 들어가 있는것을 확인할 수 있답니
 
 <br/>
 
+```javascript
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
+app.listen(port, () => {
+    console.log(`listening at http://localhost:${port}`)
+})
+```  
+
+
+
 ```bash
 $ node index.js
 ```  
 <br/>
+
 
 브라우저에 http://localhost:자신이 설정한 포트번호/ 를 입력해봅시다.  
 
